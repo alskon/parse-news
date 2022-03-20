@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Main page {% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'news/style.css' %}">
+{% endblock %}
+
+{% block content %}
+    <meta http-equiv="refresh" content="{{ refresh_time }}">
+    <main class="wrapper">
+        <div class="blocks">
+            <form class="refresh" method="post" action="">
+                {% csrf_token %}
+                <label for="r-time">Refresh time:</label>
+                <select id="r-time" name="time">
+                    {% for i in time_range %}
+                        <option value="{{ i }}"
+                                {% if i == refresh_time %}selected{% endif %}>{{ i }}</option>
+
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Update">
+            </form>
+
+            <section class="block">
+                <div class="header">
+                    <img alt='USA' src="{% static 'news/flags/us.jpg' %}">
+                    <h2>AMERICAN NEWS</h2>
+                </div>
+
+                <div class="news">
+                    {% for block in american_news %}
+                        <article class="news-block">
+                            <h4 style="background-color: {{ colors|random }}">{{ block.source }}</h4>
+                            <a href="{{ block.link }}"><p>{{ block.text }} ...</p></a>
+
+                        </article>
+                    {% endfor %}
+                </div>
+            </section>
+            <section class="block">
+                <div class="header">
+                    <img alt='Russia' src="{% static 'news/flags/rus.jpg' %}">
+                    <h2>RUSSIAN NEWS</h2>
+                </div>
+
+                <div class="news">
+                    {% for block in russian_news %}
+                        <article class="news-block">
+                            <h4 style="background-color: {{ colors|random }}"> {{ block.source }} </h4>
+                            <a href="{{ block.link }}"><p>{{ block.text }} ...</p></a>
+                        </article>
+                    {% endfor %}
+                </div>
+            </section>
+            <section class="block">
+                <div class="header">
+                    <img alt='China' src="{% static 'news/flags/china.jpg' %}">
+                    <h2>CHINESE NEWS</h2>
+                </div>
+
+                <div class="news">
+                    {% for block in chinese_news %}
+                        <article class="news-block">
+                            <h4 style="background-color: {{ colors|random }}">{{ block.source }}</h4>
+                            <a href="{{ block.link }}"><p>{{ block.text }} ...</p></a>
+                        </article>
+                    {% endfor %}
+                </div>
+            </section>
+            <section class="block">
+                <div class="header">
+                    <img alt='EU' src="{% static 'news/flags/euro.jpg' %}">
+                    <h2>EUROPEAN NEWS</h2>
+                </div>
+
+                <div class="news">
+                    {% for block in european_news %}
+                        <article class="news-block">
+                            <h4 style="background-color: {{ colors|random }}">{{ block.source }}</h4>
+                            <a href="{{ block.link }}"><p>{{ block.text }} ...</p></a>
+                        </article>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </main>
+
+{% endblock %}
